@@ -1,0 +1,11 @@
+.GuessInput{
+    display: flex;
+    justify-content: center;
+    margin: 10px auto 10px auto;
+    height: 75px;
+    width: 400px;
+
+    .GInput div{
+        margin-bottom: 5px;
+    }
+}

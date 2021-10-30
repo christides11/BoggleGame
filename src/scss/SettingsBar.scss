@@ -1,0 +1,27 @@
+.SettingsBar{
+    margin-top: 10px;
+    margin-bottom: 0px;
+
+    .form-floating{
+        margin: 5px 10px 0px 10px;
+    }
+
+    .sbcenter{
+        display: flex;
+        justify-content: center;
+        padding-left: 50px;
+        padding-right: 50px;
+        margin-bottom: 10px;
+
+        Button{
+            width: 200px;
+            height: 40px;
+            margin-right: 5px;
+            margin-top: 10px;
+        }
+
+        FloatingLabel{
+            height: 40px;
+        }
+    }
+}
