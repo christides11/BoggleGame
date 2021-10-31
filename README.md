@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+# Boggle Game
+Web-based Boggle game where players try to find as many words as they can in a randomized board.
+Using Firebase, it can also track high scores and let users select the boards used by those on the leaderboard to try and beat them.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Made using HTML, CSS (SCSS), JavaScript (React), and Firebase.
 
 ## Available Scripts
 
