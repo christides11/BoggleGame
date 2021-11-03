@@ -51,7 +51,6 @@ function BogglePage({firebaseApp, firebaseAnalytics}) {
 
   return (
     <div className="App">
-      <NavBar/>
 
       <div className="Content">
         <SettingsBar gameState={gameState}

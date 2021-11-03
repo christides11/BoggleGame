@@ -29,7 +29,7 @@ function GuessInput({allSolutions, foundSolutions, correctAnswerCallback}) {
     <div className="GuessInput" >
         <div className="GInput">
             <div>{labelText}</div>
-            <Form.Control type="text" placeholder="Make a Guess" onKeyPress={(e) => keyPress(e)} onChange={(event) => setInput(event.target.value)} />
+            <Form.Control type="text" placeholder="Make a Guess" onKeyPress={(e) => keyPress(e)} onChange={(event) => setInput(event.target.value.toLowerCase())} />
         </div>
     </div>
   );
