@@ -12,6 +12,9 @@ function SettingsBar({gameState, setGameState, setSize, setTotalTime, setMaxTime
   const [boardSizeSelection, setBoardSizeSelect] = useState(3);
   let deltaTime;
 
+  const [input, setInput] = useState("");
+  const [leaderBoard, setLeaderBoard] = useState([]);
+
   function updateGameState(endTime) {
     if (gameState === GAME_STATE.BEFORE || gameState === GAME_STATE.ENDED) {
       setStartTime(Date.now());

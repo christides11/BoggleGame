@@ -1,28 +1,16 @@
 import React, { useState, useEffect } from 'react';
-/*import {GAME_STATE} from './services/GameState.js';
-import {RandomGrid} from './services/randomGen.js';
-import {BoggleSolver} from './services/boggle_solver.js';
-import NavBar from './components/Navbar.js';
-import SettingsBar from './components/SettingsBar.js';
-import Board from './components/Board.js';
-import GuessInput from './components/GuessInput.js';
-import FoundSolutions from './components/FoundSolutions.js';
-import GameSummary from './components/GameSummary.js';*/
-import Main from './components/main';
-import './App.css';
+import {GAME_STATE} from '../services/GameState.js';
+import {RandomGrid} from '../services/randomGen.js';
+import {BoggleSolver} from '../services/boggle_solver.js';
+import NavBar from '../components/Navbar.js';
+import SettingsBar from '../components/SettingsBar.js';
+import Board from '../components/Board.js';
+import GuessInput from '../components/GuessInput.js';
+import FoundSolutions from '../components/FoundSolutions.js';
+import GameSummary from '../components/GameSummary.js';
+import './Boggle.css';
 
-function App({firebaseApp, firebaseAnalytics}){
-  return (
-    <div className="App">
-      <Main />
-    </div>
-  );
-}
-
-export default App;
-
-/*
-function App({firebaseApp, firebaseAnalytics}) {
+function BogglePage({firebaseApp, firebaseAnalytics}) {
   const [allSolutions, setAllSolutions] = useState([]);  // solutions from solver
   const [foundSolutions, setFoundSolutions] = useState([]);  // found by user
   const [gameState, setGameState] = useState(GAME_STATE.BEFORE); // Just an enuerator or the three states see below
@@ -34,7 +22,7 @@ function App({firebaseApp, firebaseAnalytics}) {
   // useEffect will trigger when the array items in the second argument are
   // updated so whenever grid is updated, we will recompute the solutions
   useEffect(() => {
-    const wordList = require('./full-wordlist.json');
+    const wordList = require('../full-wordlist.json');
     let tmpAllSolutions = findAllSolutions(grid, wordList.words);
     setAllSolutions(tmpAllSolutions);
   }, [grid]);
@@ -98,5 +86,4 @@ function App({firebaseApp, firebaseAnalytics}) {
   );
 }
 
-export default App;
-*/
+export default BogglePage;

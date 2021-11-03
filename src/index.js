@@ -4,11 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './custom.scss';
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import {firebaseConfig} from './firebase.js';
+import { BrowserRouter } from 'react-router-dom';
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <App firebaseApp={app} firebaseAnalytics={analytics} />
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
