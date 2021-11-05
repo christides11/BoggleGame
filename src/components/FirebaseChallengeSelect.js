@@ -56,7 +56,7 @@ function FirebaseChallengeSelect({setVisible, startFirebaseBoard}) {
             <ListGroup.Item action onClick={() => StartChallenge(rowObj)} key={id} as="li" className="d-flex justify-content-between align-items-start">
                 <div className="ms-2 me-auto">
                     <div className="fw-bold">{rowObj.data().name}</div>
-                    High Score: { (rowObj.id in dict) && dict[rowObj.id].data().numFound }
+                    High Score: { (rowObj.id in dict) && dict[rowObj.id].data().numFound } ({(rowObj.id in dict) && dict[rowObj.id].data().playerName})
                 </div>
             </ListGroup.Item>
         );
