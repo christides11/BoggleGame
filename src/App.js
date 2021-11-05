@@ -3,6 +3,8 @@ import Main from './components/main';
 import './App.css';
 
 function App(){
+
+  console.log("APP RENDER");
   return (
     <div className="App">
       <Main />

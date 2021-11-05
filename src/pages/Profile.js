@@ -4,7 +4,7 @@ import NavBar from '../components/Navbar.js';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import './Profile.css';
 
-function ProfilePage({firebaseApp, firebaseAnalytics}) {
+function ProfilePage({firebaseUser}) {
 
   const auth = getAuth();
   const user = auth.currentUser;
@@ -13,13 +13,13 @@ function ProfilePage({firebaseApp, firebaseAnalytics}) {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
-      user.providerData.forEach((profile) => {
+      /*user.providerData.forEach((profile) => {
         console.log("Sign-in provider: " + profile.providerId);
         console.log("  Provider-specific UID: " + profile.uid);
         console.log("  Name: " + profile.displayName);
         console.log("  Email: " + profile.email);
         console.log("  Photo URL: " + profile.photoURL);
-      });    
+      });*/    
     
     } else {
       // User is signed out

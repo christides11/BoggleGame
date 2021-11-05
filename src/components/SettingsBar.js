@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {GAME_STATE} from '../services/GameState.js';
-import { Button, Form, FloatingLabel} from 'react-bootstrap';
+import { Button, Dropdown, Form, FloatingLabel, Modal, Pagination} from 'react-bootstrap';
+import { setDoc, doc, getFirestore} from "firebase/firestore";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import FirebaseBoardSelect from './FirebaseBoardSelect.js';
+import FirebaseChallengeSelect from './FirebaseChallengeSelect.js';
 import '../scss/SettingsBar.scss';
 
-function SettingsBar({gameState, setGameState, setSize, setTotalTime, setMaxTime, maxTime}) {
+function SettingsBar({gameState, setGameState, setSize, setTotalTime, setMaxTime, maxTime, setFirebaseBoardDoc, uploadLeaderboardScore}) {
 
-  const [buttonText, setButtonText] = useState("Start Game");
   const [startTime, setStartTime] = useState(0);
   const [timeSelection, setTimeSelect] = useState(0);
   const [boardSizeSelection, setBoardSizeSelect] = useState(3);
@@ -15,17 +17,40 @@ function SettingsBar({gameState, setGameState, setSize, setTotalTime, setMaxTime
   const [input, setInput] = useState("");
   const [leaderBoard, setLeaderBoard] = useState([]);
 
-  function updateGameState(endTime) {
-    if (gameState === GAME_STATE.BEFORE || gameState === GAME_STATE.ENDED) {
-      setStartTime(Date.now());
-      setGameState(GAME_STATE.IN_PROGRESS);
-      setButtonText("End game");
-    } else if (gameState === GAME_STATE.IN_PROGRESS) {
-      deltaTime = (endTime - startTime)/ 1000.0;
-      setTotalTime(deltaTime); 
-      setGameState(GAME_STATE.ENDED);
-      setButtonText("Start Game");
-    }
+  const [fullscreen, setFullscreen] = useState(true);
+  const [show, setShow] = useState(false);
+  const [showChallenges, setShowChallenges] = useState(false);
+  
+
+  function startRandomBoard(endTime) {
+    if (gameState === GAME_STATE.IN_PROGRESS) return;
+    setStartTime(Date.now());
+    setGameState(GAME_STATE.IN_PROGRESS);
+  }
+
+  function startFirebaseBoard(firebaseBoard){
+    if(gameState === GAME_STATE.IN_PROGRESS) return;
+    setFirebaseBoardDoc(firebaseBoard);
+    setStartTime(Date.now());
+    setGameState(GAME_STATE.IN_PROGRESS);
+  }
+
+  function showBoardSelect(){
+    setFullscreen(true);
+    setShow(true);
+  }
+
+  function showChallengeSelect(){
+    setFullscreen(true);
+    setShowChallenges(true);
+  }
+
+  function endGame(endTime){
+    if (gameState !== GAME_STATE.IN_PROGRESS) return;
+    deltaTime = (endTime - startTime)/ 1000.0;
+    uploadLeaderboardScore(deltaTime);
+    setTotalTime(deltaTime); 
+    setGameState(GAME_STATE.ENDED);
   }
 
   const handleChange = (event) => {
@@ -72,9 +97,34 @@ function SettingsBar({gameState, setGameState, setSize, setTotalTime, setMaxTime
           </FloatingLabel>
         }
 
-        <Button variant="outline-primary" onClick={() => updateGameState(Date.now())} >
-          {buttonText}
-        </Button>
+        { (gameState === GAME_STATE.BEFORE || gameState === GAME_STATE.ENDED) &&
+          <Dropdown>
+            <Dropdown.Toggle variant="success" id="dropdown-basic"> Play Game </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => startRandomBoard(Date.now())}>Random Board</Dropdown.Item>
+              <Dropdown.Item onClick={() => showBoardSelect()}>Find Board</Dropdown.Item>
+              <Dropdown.Item onClick={() => showChallengeSelect()}>Challenge Board</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        }
+
+        <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Board Select</Modal.Title>
+          </Modal.Header>
+          <FirebaseBoardSelect setVisible={setShow} startFirebaseBoard={startFirebaseBoard} />
+        </Modal>
+
+        <Modal show={showChallenges} fullscreen={fullscreen} onHide={() => setShowChallenges(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Challenge Select</Modal.Title>
+          </Modal.Header>
+          <FirebaseChallengeSelect setVisible={setShowChallenges} startFirebaseBoard={startFirebaseBoard} />
+        </Modal>
+
+        { (gameState === GAME_STATE.IN_PROGRESS) &&
+          <Button variant="outline-primary" onClick={() => endGame(Date.now())}>End Game</Button>
+        }
 
         { (gameState === GAME_STATE.BEFORE || gameState === GAME_STATE.ENDED) &&
           <FloatingLabel controlId="floatingSelect" label="size">
@@ -103,7 +153,7 @@ function SettingsBar({gameState, setGameState, setSize, setTotalTime, setMaxTime
             ['#A30000', 0.33],
           ]}
           onComplete={(totalElapsedTime) => [
-            updateGameState(Date.now())
+            endGame(Date.now())
           ]}
           >
           {({ remainingTime }) => renderTime("seconds", remainingTime)}

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import "../scss/NavBar.scss";
 
-function NavBar() {
+function NavBar({user, setUser}) {
 
   const [loginState, SetLoginState] = useState(false);
   const auth = getAuth();
@@ -30,7 +30,6 @@ function NavBar() {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid;
       SetLoginState(true);
       // ...
     } else {
@@ -43,27 +42,25 @@ function NavBar() {
   return (
     <div className="NavBar">
         <Navbar id="bar" bg="primary" variant="dark" expand="lg">
-        <Container>
-            <Navbar.Brand href="/">Boggle App</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
+          <Container>
+            <Navbar.Brand as={Link} to="/">Boggle Game</Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link as={Link} to="/">Boggle</Nav.Link>
+                <Nav.Link as={Link} to="/">Play</Nav.Link>
                 <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
               </Nav>
+              <Nav>
+                { loginState === true &&
+                  <Nav.Link onClick={() => TrySignOut()}>Log Out</Nav.Link>
+                }
+                {
+                  loginState === false &&
+                  <Nav.Link onClick={() => TrySignIn()}>Sign In</Nav.Link>
+                }
+              </Nav>
             </Navbar.Collapse>
-            <Navbar.Collapse className="justify-content-end">
-              { loginState === true &&
-                <Navbar.Text onClick={() => TrySignOut()}>
-                  Log Out
-                </Navbar.Text>
-              }
-              {
-                loginState === false &&
-                <Navbar.Text onClick={() => TrySignIn()}> Sign in </Navbar.Text>
-              }
-            </Navbar.Collapse>
-        </Container>
+          </Container>
         </Navbar>
     </div>
   );
