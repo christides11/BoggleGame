@@ -10,7 +10,6 @@ import NavBar from './components/Navbar.js';
 import './index.css';
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 ReactDOM.render(
   <BrowserRouter>

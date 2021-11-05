@@ -20,7 +20,11 @@ function FirebaseBoardSelect({setVisible, startFirebaseBoard}) {
         if(mounted){
           // Get the last visible document
           const lastVis = genDocs.docs[genDocs.docs.length-1];
-          console.log(lastVis);
+          if(genDocs.docs[0] == null || genDocs.docs[0] == undefined){
+            setLastVisible(null);
+            setCurrentDocs(null);
+            return () => mounted = false;
+          }
           setCurrentDocs(genDocs);
           setLastVisible(lastVis);
         }
@@ -53,11 +57,10 @@ function FirebaseBoardSelect({setVisible, startFirebaseBoard}) {
           );
     }
 
-    function previousPage(){
-
-    }
-
     function nextPage(){
+      if(lastVisible === null || lastVisible === undefined){
+        setLastVisible(null);
+      }
       setCurrentDocs(null);
     }
 
@@ -71,7 +74,6 @@ function FirebaseBoardSelect({setVisible, startFirebaseBoard}) {
 
             {currentDocs !== null &&
               <nav>
-                <Button variant="outline-primary" onClick={() => previousPage()}>Previous Page</Button>
                 <Button variant="outline-primary" onClick={() => nextPage()}>Next Page</Button>
                 {ShowContents()}
               </nav>

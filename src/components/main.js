@@ -10,16 +10,13 @@ function Main({user, setUser}){
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log("User logged in top level.");
+      console.log("User logged in.");
       SetFirebaseUser(user);
     } else {
-      console.log("User logged out top level.");
+      console.log("User logged out.");
       SetFirebaseUser(null);
     }
   });
-
-  console.log("MAIN RENDER");
-
   return (
     <Switch> {/* The Switch decides which component to show based on the current URL.*/}
       <Route exact path='/' component={() => (<BogglePage user={firebaseUser} />)}></Route>

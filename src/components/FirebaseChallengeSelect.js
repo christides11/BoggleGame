@@ -27,7 +27,6 @@ function FirebaseChallengeSelect({setVisible, startFirebaseBoard}) {
                 const hsDoc = await getDocs(highScoreRequest);
                 if(hsDoc.docs.length > 0){
                     tempDict[challengesDoc.docs[a].id] = hsDoc.docs[0];
-                    //console.log(dict[challengesDoc.docs[a].id].id);
                 }
             }
             setDict(tempDict);
