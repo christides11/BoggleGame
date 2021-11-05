@@ -1,13 +1,13 @@
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import './custom.scss';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {firebaseConfig} from './firebase.js';
 import { BrowserRouter } from 'react-router-dom';
 import NavBar from './components/Navbar.js';
 import './index.css';
+import 'bootstrap/scss/bootstrap.scss';
 
 const app = initializeApp(firebaseConfig);
 
